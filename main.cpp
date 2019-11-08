@@ -7,8 +7,9 @@
 #include <algorithm>
 using namespace std;
 
-    int number,in;
-    string s,alias,st;
+    int number,max,min;
+    float prom;
+    string s,alias,st,marca;
     map<string,int>data1;
     vector<int>numeros;
     vector<string>aliados;
@@ -18,51 +19,59 @@ using namespace std;
 
 void valores(){
 
-    vector<pair<string,int>> data;
+    vector<pair<int,string>> data;
+
+
+        while(true){
+
+            numeros.clear();aliados.clear();
 
 
 
-    while(true){
-
-        numeros.clear();aliados.clear();
-//        getline(file,s);
-
-//        if (s[0]>='A' && s[0] <='Z')
+            while(getline(file,s)){
 
 
+                stringstream ss(s);
+
+                if (ss>>st){
+                    if (st[0] <='A' or st[0]>='Z')
+                        aliados.push_back(st);
+                    else{
+
+                        for(int i=0; i < numeros.size(); i++)
+                            data.push_back(make_pair(numeros.at(i),aliados.at(i)));
+
+                        sort(begin(data),end(data));
+
+                        sort(begin(numeros),end(numeros));
+                        //cout<<numeros.end();
+                        //for (const auto& item:numeros) {
+                        //    contador+=item;
+
+                        //}
+                        //cout<<contador/numeros.end();
+
+                        for (const auto&item:data)
+                            cout<<item.first<<" "<<item.second<<endl;
 
 
-        while(getline(file,s)){
+                    }
 
-            stringstream ss(s);
-
-            if (ss>>st){
-                if (st[0] <='A' or st[0]>='Z')
-                    aliados.push_back(st);
-                else{
-                    for(int i=0; i < aliados.size(); i++)
-                        data.push_back(make_pair(aliados.at(i),numeros.at(i)));
-                   // sort(begin(data),end(data));
-
-                    for(auto &item:data)
-                        cout << item.first<<" "<<item.second<< endl;
-                    valores();
                 }
+                if(ss>>number)
+                    numeros.push_back(number);
 
             }
-            if(ss>>number)
-                numeros.push_back(number);
+            for(int i=0; i < aliados.size(); i++)
+                data.push_back(make_pair(numeros.at(i),aliados.at(i)));
+
+            break;
 
         }
-        for(int i=0; i < aliados.size(); i++)
-            data.push_back(make_pair(aliados.at(i),numeros.at(i)));
-
-        break;
-
     }
 
 
-}
+
 int main() {
 
     file.open("bid_example.txt");
